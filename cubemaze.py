@@ -610,18 +610,18 @@ to rotate the maze\nInput q or exit to quit.")
         inp = input()
         if inp == 'q' or inp == 'exit':
             print('Goodbye')
-            break
+            return 'loss'
         if inp in direction_mapping:
             prev_coords = player.coords
             res = maze_game.attempt_move('player',direction_mapping[inp])
             if res.name == 'goal':
                 print('You made it to the goal!  Amazing!')
-                break
+                return 'win'
             elif res.name == 'wall':
                 print('Ouch!  You hit a wall.')
             elif res.name[:4] == 'void':
                 print('You were destroyed by the void!')
-                break
+                return 'loss'
             else:
                 noreturn = MazeEntity('void' + str(maze_game.next_entity - 2),
                                       ('XX','XX'),
@@ -632,8 +632,11 @@ to rotate the maze\nInput q or exit to quit.")
             
 if __name__ == "__main__":
     play_again = True
+    difficulty = 2
     while(play_again):
-        play_game(3)
+        if('win' == play_game(difficulty)):
+            print("Let's make it a bit harder.")
+            difficulty += 1
         print('Play again? (y/n)')
         inp = input()
         while(inp != 'y' and inp != 'n'):
