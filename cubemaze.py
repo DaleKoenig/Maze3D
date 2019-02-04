@@ -97,7 +97,7 @@ class CubeIsometry:
         """
         exponent = exponent % 12 # 12 is the lcm of all possible orders in the group
         base = CubeIsometry('i j k')
-        for i in range(exponent):
+        for _ in range(exponent):
             base = self * base
         return base
     
@@ -180,7 +180,7 @@ def cube_isometry_test():
     """Run code validation checks on CubeIsometry.
     """
     # Default initialization test
-    x = CubeIsometry()
+    x = CubeIsometry('i j k')
     if(x.signs != [1,1,1]):
         print('Initialized identity but got signs {}'.format(x.signs))
     if(x.permutation != [0,1,2]):
@@ -252,6 +252,7 @@ DISPLAY_OPTIONS_MED = {'layers_per_row' : 7,
                        'wall_symbol' : ('##','##'),
                         'empty_symbol' : ('  ','  '),
                         'separator' : '   '}
+
 DISPLAY_OPTIONS_DENSE = {'layers_per_row' : 7, 
                          'wall_symbol' : ('#',),
                          'empty_symbol' : (' ',),
@@ -591,9 +592,9 @@ direction_mapping = {'w' : (0,-1,0),
                      'd' : (0,0,1)}
 
 rotate_mapping = {'rw' : CubeIsometry('j -i k'),
-                  'ra' : CubeIsometry('-k j i'),
+                  'rd' : CubeIsometry('-k j i'),
                   'rs' : CubeIsometry('-j i k'),
-                  'rd' : CubeIsometry('k j -i')}
+                  'ra' : CubeIsometry('k j -i')}
 
 def play_game(n):
     maze_game = MazeNav3D(n,display_options='med')
